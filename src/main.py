@@ -2,7 +2,7 @@ import sqlite3
 import os
 
 # Conexão com o banco de dados SQLite
-conexao = sqlite3.connect('users.db')
+conexao = sqlite3.connect('./src/users.db')
 cursor = conexao.cursor()
 
 #Criando a tabela de usuários caso não exista
