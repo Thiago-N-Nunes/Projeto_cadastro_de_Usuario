@@ -30,19 +30,25 @@ def cadastrar():
        
 
 def consultar():
-    usuarios = cursor.execute("SELECT * FROM usuarios")
-    usuarios = usuarios.fetchall()
-    id, nome, idade, email = usuarios
-    print('CONSULTAR')
-    consultado = int(input("""Qual seria o interesse da consulta?
-1. NOME
-2. IDADE
-3. EMAIL\n"""))
-    match consultado:
-        case 1:
-            print('.' + nome)
-        case 2:
-            print()
-def alterar():
-    ...
-    
+    cursor.execute("SELECT * FROM usuarios ORDER BY nome ASC")
+    usuarios = cursor.fetchall()
+    for usuario in usuarios:
+        id, nome, idade, email = usuario
+        print(usuario)
+    conexao.commit()
+
+def de_maior():
+    cursor.execute("SELECT * FROM usuarios WHERE idade > 18")
+    usuarios = cursor.fetchall()
+    for usuario in usuarios:
+        id, nome, idade, email = usuario
+    print(usuario)
+    conexao.commit()
+
+def de_menor():
+    cursor.execute("SELECT * FROM usuarios WHERE idade < 18")
+    usuarios = cursor.fetchall()
+    for usuario in usuarios:
+        id, nome, idade, email = usuario
+        print(usuario)
+    conexao.commit()
