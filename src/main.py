@@ -14,7 +14,7 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS usuarios(
             )""")
 
 # Loop para cadastro de usuários, se o usuário digitar um nome vazio, o cadastro é finalizado
-def cadastrar():
+def adicionar_usuario():
     while True:
         nome = input('Digite o nome: ')   
         idade = int(input('Digite sua idade: '))
@@ -27,28 +27,34 @@ def cadastrar():
             os.system('cls')
             print('Cadastro finalizado!')    
             break
-       
-
-def consultar():
-    cursor.execute("SELECT * FROM usuarios ORDER BY nome ASC")
+        
+def mostrar():
+    usuarios = cursor.execute("SELECT nome, idade, email FROM usuarios ORDER BY nome ASC")
     usuarios = cursor.fetchall()
-    for usuario in usuarios:
-        id, nome, idade, email = usuario
-        print(usuario)
+    print(usuarios)
     conexao.commit()
 
-def de_maior():
-    cursor.execute("SELECT * FROM usuarios WHERE idade > 18")
-    usuarios = cursor.fetchall()
-    for usuario in usuarios:
-        id, nome, idade, email = usuario
-    print(usuario)
-    conexao.commit()
+def maiores():
+    maior_idade = cursor.execute("SELECT nome, idade, email FROM usuarios WHERE idade > 18")
+    maior_idade = cursor.fetchall()
+    print(maior_idade)
 
-def de_menor():
-    cursor.execute("SELECT * FROM usuarios WHERE idade < 18")
-    usuarios = cursor.fetchall()
-    for usuario in usuarios:
-        id, nome, idade, email = usuario
-        print(usuario)
-    conexao.commit()
+def menores():
+    menor_idade = cursor.execute("SELECT nome, idade, email FROM usuarios WHERE idade < 18")
+    menor_idade = cursor.fetchall()
+    print(menor_idade)
+opcao = input(""" Oque deseja fazer?
+1. Adicionar usuario
+2. Exibir usuario
+2.1. Exibir Usuarios maiores de idade
+2.2. Exibir Usuarios menores de idade
+""")
+match opcao:
+    case "1":
+        adicionar_usuario()
+    case "2":
+        mostrar()
+    case "2.1":
+        maiores()
+    case "2.2":
+        menores()
